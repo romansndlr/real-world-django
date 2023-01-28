@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-page">
+  <div class="banner">
+    <div class="container">
+      <h1 class="logo-font">conduit</h1>
+      <p>A place to share your knowledge.</p>
+    </div>
+  </div>
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="feed-toggle">
+          <ul class="nav nav-pills outline-active">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home' %}">Global Feed</a>
+            </li>
+          </ul>
+        </div>
+        {% for article in articles %}
+        <div class="article-preview">
+          <div class="article-meta">
+            <a href="{% url 'profile_detail' pk=article.author.profile.pk %}"><img
+                src="{{ article.author.profile.image }}" /></a>
+            <div class="info">
+              <a href="{% url 'profile_detail' pk=article.author.profile.pk %}"
+                class="author">{{ article.author.first_name }} {{ article.author.last_name }}</a>
+              <span class="date">{{ article.created_at|date:"M d" }}</span>
+            </div>
+          </div>
+          <a href="{% url 'article_detail' pk=article.pk %}" class="preview-link">
+            <h1>{{ article.title }}</h1>
+            <p>{{ article.description }}</p>
+            <span>Read more...</span>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>
